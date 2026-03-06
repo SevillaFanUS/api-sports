@@ -10,6 +10,4 @@ enabled_site_setting :api_sports_enabled
 
 require_relative "lib/api_sports/html_allowlist"
 
-after_initialize do
-  ApiSports::HtmlAllowlist.apply!
-end
+ApiSports::HtmlAllowlist.apply!(self)
