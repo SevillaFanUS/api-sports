@@ -13,6 +13,15 @@
   font-size: 0.9em;
 }
 
+.api-sports-defaults-notice {
+  background: var(--success-low);
+  color: var(--success);
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
 .api-sports-modal-layout {
   display: flex;
   gap: 0;

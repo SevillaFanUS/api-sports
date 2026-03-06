@@ -25,3 +25,25 @@ plugins:
     max: 3600
     locale_default:
       en: "Widget Refresh Interval (seconds)"
+  api_sports_default_league_id:
+    default: ""
+    client: true
+    locale_default:
+      en: "Default League ID (e.g., 140 for La Liga)"
+  api_sports_default_team_id:
+    default: ""
+    client: true
+    locale_default:
+      en: "Default Team ID (e.g., 536 for Sevilla FC)"
+  api_sports_default_season:
+    default: "2025"
+    client: true
+    locale_default:
+      en: "Default Season Year"
+  api_sports_cache_duration:
+    default: 300
+    client: false
+    min: 60
+    max: 3600
+    locale_default:
+      en: "Server-side cache duration (seconds)"

@@ -154,6 +154,26 @@ export default class ApiSportsWidgetModal extends Component {
   @tracked fieldValues = {};
   @tracked validationError = null;
 
+  constructor() {
+    super(...arguments);
+    // Pre-fill with defaults from site settings
+    this.initializeDefaults();
+  }
+
+  initializeDefaults() {
+    const defaults = {};
+    if (this.siteSettings.api_sports_default_league_id) {
+      defaults.league_id = this.siteSettings.api_sports_default_league_id;
+    }
+    if (this.siteSettings.api_sports_default_team_id) {
+      defaults.team_id = this.siteSettings.api_sports_default_team_id;
+    }
+    if (this.siteSettings.api_sports_default_season) {
+      defaults.season = this.siteSettings.api_sports_default_season;
+    }
+    this.fieldValues = defaults;
+  }
+
   get widgetTypes() {
     return WIDGET_TYPES;
   }
@@ -168,6 +188,13 @@ export default class ApiSportsWidgetModal extends Component {
 
   get hasApiKey() {
     return !!this.siteSettings.api_sports_api_key;
+  }
+
+  get defaultsConfigured() {
+    return !!(
+      this.siteSettings.api_sports_default_league_id ||
+      this.siteSettings.api_sports_default_team_id
+    );
   }
 
   // Returns fields with their current value merged in — avoids (get ...) helper
@@ -207,8 +234,9 @@ export default class ApiSportsWidgetModal extends Component {
   @action
   selectType(typeId) {
     this.selectedTypeId = typeId;
-    this.fieldValues = {};
     this.validationError = null;
+    // Preserve defaults when switching types
+    this.initializeDefaults();
   }
 
   @action
@@ -273,11 +301,17 @@ export default class ApiSportsWidgetModal extends Component {
       <:body>
         {{#unless this.hasApiKey}}
           <div class="api-sports-no-key-warning">
-            ⚠️ No API key configured. Ask your admin to set the
+            No API key configured. Ask your admin to set the
             <strong>api_sports_api_key</strong>
             site setting.
           </div>
         {{/unless}}
+
+        {{#if this.defaultsConfigured}}
+          <div class="api-sports-defaults-notice">
+            Using configured defaults for League/Team IDs. You can override below.
+          </div>
+        {{/if}}
 
         <div class="api-sports-modal-layout">
 

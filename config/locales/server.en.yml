@@ -4,3 +4,7 @@ en:
     api_sports_api_key: "API Sports API Key (from api-sports.io dashboard)"
     api_sports_theme: "Widget theme (dark or light)"
     api_sports_widget_refresh: "Widget auto-refresh interval in seconds (min 30)"
+    api_sports_default_league_id: "Default league ID for widgets (e.g., 140 for La Liga)"
+    api_sports_default_team_id: "Default team ID for widgets (e.g., 536 for Sevilla FC)"
+    api_sports_default_season: "Default season year for league/standings widgets"
+    api_sports_cache_duration: "How long to cache API responses server-side (seconds)"
