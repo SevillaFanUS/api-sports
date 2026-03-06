@@ -3,10 +3,8 @@
 # Allow the <api-sports-widget> custom element and all its data-* attributes
 # to pass through Discourse's HTML sanitiser so widgets render in posts.
 #
-# Discourse uses the `register_html_builder` / `register_allowlist_entry` API
-# on the plugin instance for new-style plugins. Here we use the lower-level
-# approach of registering a Loofah scrubber so the custom element and its
-# attributes survive sanitisation.
+# We directly modify Loofah's allowlists which is the standard approach
+# for Discourse plugins that need custom HTML elements.
 
 module ApiSports
   module HtmlAllowlist
@@ -42,16 +40,21 @@ module ApiSports
     ].freeze
 
     def self.apply!(plugin)
-      plugin.register_html_builder("cooking") do |doc|
-        # no-op: we just need the tag/attr allowlist entries below
-        doc
-      end
+      # Loofah renamed WhiteList to SafeList in newer versions
+      # Support both for compatibility
+      safelist = if defined?(Loofah::HTML5::SafeList)
+                   Loofah::HTML5::SafeList
+                 else
+                   Loofah::HTML5::WhiteList
+                 end
 
+      # Add the custom element to Loofah's allowlist
+      safelist::ALLOWED_ELEMENTS.add(WIDGET_TAG)
+
+      # Add all data attributes to Loofah's allowlist
       WIDGET_ATTRS.each do |attr|
-        plugin.register_allowlist_entry(:attribute, WIDGET_TAG, attr)
+        safelist::ALLOWED_ATTRIBUTES.add(attr)
       end
-
-      plugin.register_allowlist_entry(:element, WIDGET_TAG)
     end
   end
 end

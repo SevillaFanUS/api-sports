@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(tree:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(git status:*)",
+      "Bash(git add:*)"
     ]
   }
 }
