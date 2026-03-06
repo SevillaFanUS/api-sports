@@ -1,75 +1,153 @@
-import { apiInitializer } from "discourse/lib/api-initializer";
-import { inject as service } from "@ember/service";
-import ApiSportsModal from "../components/modal/api-sports-widget-modal";
+.api-sports-modal {
+  .modal-body {
+    padding: 0;
+  }
+}
 
-export default apiInitializer("1.8.0", (api) => {
-  if (!api.container.lookup("service:site-settings").api_sports_enabled) {
-    return;
+.api-sports-no-key-warning {
+  background: var(--danger-low);
+  color: var(--danger);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.api-sports-modal-layout {
+  display: flex;
+  gap: 0;
+  min-height: 400px;
+}
+
+.api-sports-type-list {
+  width: 220px;
+  min-width: 220px;
+  border-right: 1px solid var(--primary-low);
+  padding: 1rem 0;
+  background: var(--secondary);
+}
+
+.api-sports-section-label {
+  font-size: 0.75em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary-medium);
+  padding: 0.5rem 1rem 0.25rem;
+}
+
+.api-sports-type-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--primary);
+  font-size: 0.875em;
+
+  &:hover {
+    background: var(--primary-very-low);
   }
 
-  // Inject the api-sports widget script into <head> once
-  if (!document.getElementById("api-sports-widget-script")) {
-    const script = document.createElement("script");
-    script.id = "api-sports-widget-script";
-    script.type = "module";
-    script.crossOrigin = "anonymous";
-    script.src = "https://widgets.api-sports.io/3.1.0/widgets.js";
-    document.head.appendChild(script);
+  &.is-active {
+    background: var(--tertiary-very-low);
+    color: var(--tertiary);
+    font-weight: 600;
   }
+}
 
-  // Inject a hidden global config widget
-  function ensureConfigWidget() {
-    if (document.getElementById("api-sports-global-config")) {
-      return;
-    }
+.api-sports-fields-panel {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
 
-    const siteSettings = api.container.lookup("service:site-settings");
-    const config = document.createElement("api-sports-widget");
-    config.id = "api-sports-global-config";
-    config.setAttribute("data-type", "config");
-    config.setAttribute("data-sport", "football");
-    config.setAttribute("data-key", siteSettings.api_sports_api_key || "");
-    config.setAttribute("data-theme", siteSettings.api_sports_theme || "dark");
-    config.setAttribute(
-      "data-refresh",
-      String(siteSettings.api_sports_widget_refresh || 60)
-    );
-    config.setAttribute("data-show-logos", "true");
-    config.setAttribute("data-show-error", "false");
-    config.setAttribute("data-lang", "en");
-    config.setAttribute("data-target-player", "modal");
-    config.style.display = "none";
-    document.body.appendChild(config);
+.api-sports-type-description {
+  color: var(--primary-medium);
+  font-size: 0.875em;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.api-sports-quick-ids {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.api-sports-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  background: var(--primary-very-low);
+  border: 1px solid var(--primary-low);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.8em;
+
+  &:hover {
+    background: var(--tertiary-very-low);
+    border-color: var(--tertiary-low);
   }
+}
 
-  api.onPageChange(() => {
-    ensureConfigWidget();
-  });
+.api-sports-chip-id {
+  color: var(--primary-medium);
+  font-family: monospace;
+}
 
-  // Add toolbar button
-  api.onToolbarCreate((toolbar) => {
-    toolbar.addButton({
-      id: "api-sports-widget",
-      group: "extras",
-      icon: "futbol",
-      title: "api_sports.toolbar_button_title",
-      sendAction: (event) => {
-        toolbar.context.send("showApiSportsModal", event);
-      },
-    });
-  });
+.api-sports-field {
+  margin-bottom: 0.75rem;
+}
 
-  // Wire modal to composer — modal must be a declared service, not a container lookup
-  api.modifyClass("component:d-editor", {
-    pluginId: "discourse-api-sports",
-    modal: service(),
+.api-sports-field-label {
+  display: block;
+  font-size: 0.875em;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
 
-    actions: {
-      showApiSportsModal(toolbarEvent) {
-        this.modal.show(ApiSportsModal, {
-          model: { toolbarEvent },
-        });
-      },
-    },
-  });
-});
+.api-sports-required {
+  color: var(--danger);
+  margin-left: 0.2rem;
+}
+
+.api-sports-field-input {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--primary-low);
+  border-radius: 4px;
+  font-size: 0.875em;
+  background: var(--secondary);
+  color: var(--primary);
+
+  &:focus {
+    outline: none;
+    border-color: var(--tertiary);
+  }
+}
+
+.api-sports-validation-error {
+  color: var(--danger);
+  font-size: 0.875em;
+  margin-bottom: 0.75rem;
+}
+
+.api-sports-html-preview {
+  background: var(--primary-very-low);
+  border-radius: 4px;
+  padding: 0.6rem 0.8rem;
+  margin-top: 0.25rem;
+
+  code {
+    font-size: 0.8em;
+    word-break: break-all;
+    color: var(--primary-high);
+  }
+}
