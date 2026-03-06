@@ -1,4 +1,5 @@
 import { apiInitializer } from "discourse/lib/api-initializer";
+import { inject as service } from "@ember/service";
 import ApiSportsModal from "../components/modal/api-sports-widget-modal";
 
 export default apiInitializer("1.8.0", (api) => {
@@ -58,14 +59,14 @@ export default apiInitializer("1.8.0", (api) => {
     });
   });
 
-  // Wire modal to composer
+  // Wire modal to composer — modal must be a declared service, not a container lookup
   api.modifyClass("component:d-editor", {
     pluginId: "discourse-api-sports",
+    modal: service(),
 
     actions: {
       showApiSportsModal(toolbarEvent) {
-        const modalService = api.container.lookup("service:modal");
-        modalService.show(ApiSportsModal, {
+        this.modal.show(ApiSportsModal, {
           model: { toolbarEvent },
         });
       },
