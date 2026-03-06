@@ -1,9 +1,0 @@
-en:
-  js:
-    api_sports:
-      toolbar_button_title: "Insert Football Widget"
-  admin_js:
-    admin:
-      site_settings:
-        categories:
-          api_sports: "API Sports Widgets"

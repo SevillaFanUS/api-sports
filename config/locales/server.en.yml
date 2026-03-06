@@ -1,6 +1,0 @@
-en:
-  site_settings:
-    api_sports_enabled: "Enable API Sports Widgets"
-    api_sports_api_key: "API Sports API Key (from api-sports.io dashboard)"
-    api_sports_theme: "Widget theme (dark or light)"
-    api_sports_widget_refresh: "Widget auto-refresh interval in seconds (min 30)"
