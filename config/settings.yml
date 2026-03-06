@@ -1,0 +1,27 @@
+plugins:
+  api_sports_enabled:
+    default: true
+    client: true
+    locale_default:
+      en: "Enable API Sports Widgets"
+  api_sports_api_key:
+    default: ""
+    client: true
+    secret: true
+    locale_default:
+      en: "API Sports API Key"
+  api_sports_theme:
+    default: "dark"
+    client: true
+    enum:
+      - dark
+      - light
+    locale_default:
+      en: "Widget Theme"
+  api_sports_widget_refresh:
+    default: 60
+    client: true
+    min: 30
+    max: 3600
+    locale_default:
+      en: "Widget Refresh Interval (seconds)"
