@@ -1,0 +1,14 @@
+plugins:
+  api_sports_enabled:
+    default: true
+    client: true
+  api_sports_api_key:
+    default: ""
+    client: true
+  api_sports_theme:
+    default: "dark"
+    client: true
+    enum: ["dark", "light"]
+  api_sports_widget_refresh:
+    default: 60
+    client: true
