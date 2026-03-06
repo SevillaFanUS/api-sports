@@ -1,5 +1,5 @@
 import { apiInitializer } from "discourse/lib/api-initializer";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import ApiSportsModal from "../components/modal/api-sports-widget-modal";
 
 export default apiInitializer("1.8.0", (api) => {

@@ -4,7 +4,9 @@
       "Bash(tree:*)",
       "Bash(dir:*)",
       "Bash(git status:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nFix: Use Loofah''s direct API instead of non-existent register_allowlist_entry\n\nThe method register_allowlist_entry does not exist in Discourse''s Plugin::Instance.\nThis fix directly modifies Loofah''s SafeList/WhiteList to allow the custom element\nand attributes, which is the standard approach for Discourse plugins.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)"
     ]
   }
 }
