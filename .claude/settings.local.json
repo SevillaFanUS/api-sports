@@ -6,7 +6,9 @@
       "Bash(git status:*)",
       "Bash(git add:*)",
       "Bash(git commit -m \"$\\(cat <<''EOF''\nFix: Use Loofah''s direct API instead of non-existent register_allowlist_entry\n\nThe method register_allowlist_entry does not exist in Discourse''s Plugin::Instance.\nThis fix directly modifies Loofah''s SafeList/WhiteList to allow the custom element\nand attributes, which is the standard approach for Discourse plugins.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nFix settings format and update Ember imports for modern Discourse\n\n- Remove non-standard locale_default from settings.yml\n- Use proper type: enum and type: integer for settings\n- Update @ember/service import to modern syntax \\(no inject alias\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nFix: Use standard withPluginApi instead of api-initializer\n\nThe api-initializer module doesn''t exist in all Discourse versions.\nUsing the standard withPluginApi pattern which is more widely compatible.\n\nAlso enabled data-show-error to help debug widget loading issues.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   }
 }
