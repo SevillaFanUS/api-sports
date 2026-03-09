@@ -211,24 +211,28 @@ export default class ApiSportsWidgetModal extends Component {
     const type = this.selectedType;
     if (!type) return "";
 
-    let attrs = `data-type="${type.id}"`;
+    // Build BBCode attributes (without data- prefix)
+    let attrs = `type="${type.id}"`;
 
     if (type.id === "h2h") {
       const t1 = (this.fieldValues["team1_id"] || "").trim();
       const t2 = (this.fieldValues["team2_id"] || "").trim();
       if (t1 && t2) {
-        attrs += ` data-teams="${t1}-${t2}"`;
+        attrs += ` teams="${t1}-${t2}"`;
       }
     } else {
       type.fields.forEach((field) => {
         const val = (this.fieldValues[field.key] || "").trim();
         if (val && field.attr) {
-          attrs += ` ${field.attr}="${val}"`;
+          // Convert data-foo to foo for BBCode
+          const bbcodeAttr = field.attr.replace("data-", "");
+          attrs += ` ${bbcodeAttr}="${val}"`;
         }
       });
     }
 
-    return `<api-sports-widget ${attrs}></api-sports-widget>`;
+    // Use BBCode syntax instead of raw HTML
+    return `[api-sports ${attrs}][/api-sports]`;
   }
 
   @action
@@ -373,7 +377,7 @@ export default class ApiSportsWidgetModal extends Component {
                 </div>
               {{/if}}
 
-              <div class="api-sports-section-label">Generated HTML</div>
+              <div class="api-sports-section-label">Generated Code</div>
               <div class="api-sports-html-preview">
                 <code>{{this.generatedHtml}}</code>
               </div>

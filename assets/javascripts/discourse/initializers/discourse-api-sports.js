@@ -54,6 +54,34 @@ export default {
       // Ensure config widget exists on initial load
       ensureConfigWidget();
 
+      // Process widgets in rendered posts
+      // The api-sports library may not detect widgets that are already in the DOM
+      // when posts render, so we need to "activate" them by replacing them with
+      // fresh elements that the library will detect
+      api.decorateCooked(
+        ($elem) => {
+          const widgets = $elem[0].querySelectorAll("api-sports-widget");
+          widgets.forEach((widget) => {
+            // Clone the widget to create a fresh element
+            // This triggers the api-sports library to detect and initialize it
+            const clone = document.createElement("api-sports-widget");
+
+            // Copy all attributes
+            Array.from(widget.attributes).forEach((attr) => {
+              clone.setAttribute(attr.name, attr.value);
+            });
+
+            // Set minimum styling so it's visible
+            clone.style.display = "block";
+            clone.style.minHeight = "100px";
+
+            // Replace the original with the clone
+            widget.parentNode.replaceChild(clone, widget);
+          });
+        },
+        { id: "api-sports-widget-decorator" }
+      );
+
       // Add toolbar button
       api.onToolbarCreate((toolbar) => {
         toolbar.addButton({
