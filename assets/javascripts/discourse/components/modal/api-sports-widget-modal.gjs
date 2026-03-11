@@ -232,7 +232,8 @@ export default class ApiSportsWidgetModal extends Component {
     }
 
     // Use BBCode syntax instead of raw HTML
-    return `[api-sports ${attrs}][/api-sports]`;
+    // Note: Must include content (space) between tags - empty BBCode tags are not parsed
+    return `[api-sports ${attrs}] [/api-sports]`;
   }
 
   @action
